@@ -1,7 +1,9 @@
 package DCCN;
 import java.io.*;
 import java.net.*;
-
+/*
+* Created by Rebecca D'souza on 02.09.18
+* */
 public class Server {
     public static void main(String[] args) throws Exception {
         String message;
@@ -20,12 +22,6 @@ public class Server {
             pw2.println(message);
             pw2.flush();
             if(message.equals("bye")) break;
-
-            message = br2.readLine();
-            pw1.println(message);
-            pw1.flush();
-            if(message.equals("bye")) break;
-
         }
 
         serverSocket1.close();

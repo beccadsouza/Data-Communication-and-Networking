@@ -1,31 +1,59 @@
 package DCCN;
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
 public class Client2 {
     public static void main(String[] args) throws Exception {
         String message;
-
+        char FLAG = 'R';
+        char header = 'A';
+        char trailer = 'Z';
+        char ESC = 'E';
+        String flag = "01111110";
         Socket sock = new Socket("127.0.0.1", 2000);
-        BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
+        Scanner sc = new Scanner(System.in);
         PrintWriter pw = new PrintWriter(sock.getOutputStream(), true);
-        BufferedReader br2 = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-
+        BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+        List<Character> al = Arrays.asList(FLAG,header,trailer,ESC);
         while(true) {
-            message = br2.readLine();
-            System.out.println("Client 1 : "+message);
+            message = br.readLine();
             if(message.equals("bye")) break;
+            System.out.println("Client 1 : "+message.substring(0,message.length()-1));
 
-            System.out.print("Client 2 : ");
-            message = br1.readLine();
-            pw.println(message);
-            pw.flush();
-            if(message.equals("bye")) break;
+            if(message.charAt(message.length()-1)=='$') {
+                System.out.println("Client 2 : Decoded frames data is ");
+                String[] temp = message.substring(1, message.length() - 2).split("RR");
+                for (String x : temp) {
+                    String y = x.substring(1, x.length() - 1);
+                    String ans = "";
+                    for (int i = 0; i < y.length(); i++) {
+                        if (i == 0 && !al.contains(y.charAt(i))) {
+                            ans += y.charAt(i);
+                        } else if (i != 0) {
+                            if (al.contains(y.charAt(i))) {
+                                if (y.charAt(i - 1) == ESC) {
+                                    if (!(i != 1 && y.charAt(i - 2) == ESC && y.charAt(i) == ESC))
+                                        ans += y.charAt(i);
+                                }
+                            } else ans += y.charAt(i);
+                        }
+                    }
+                    System.out.println(ans);
+                }
+            }
+            else {
+                System.out.println("Client 2 : Decoded frames data is ");
+                String[] temp = message.substring(8, message.length() - 9).split("0111111001111110");
+                for (String x : temp) {
+                    x = x.replaceAll("111110","11111");
+                    System.out.println(x);
+                }
+            }
         }
-
+        System.out.println("Client 1 : bye");
         sock.close();
-        br1.close();
-        br2.close();
+        br.close();
         pw.close();
     }
 }
