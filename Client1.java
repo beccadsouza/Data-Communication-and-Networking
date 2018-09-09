@@ -7,10 +7,10 @@ import java.util.*;
  * */
 public class Client1 {
     public static void main(String[] args) throws Exception {
-        String message = "";
-        char FLAG = 'R';
-        char header = 'A';
-        char trailer = 'Z';
+        String message;
+        char FLAG = 'F';
+        char header = 'H';
+        char trailer = 'T';
         char ESC = 'E';
         String flag = "01111110";
         Socket sock = new Socket("127.0.0.1", 3000);
@@ -49,9 +49,8 @@ public class Client1 {
             else{
                 System.out.println("Enter number of frames : ");
                 int f = sc.nextInt();
-                String MSG="",temp = "";
+                String MSG="",temp;
                 for (int i = 1; i < f + 1; i++) {
-                    temp = "";
                     System.out.println("Enter frame " + i);
                     message =sc.next();
                     if(message.length()>5){

@@ -8,13 +8,12 @@ import java.util.*;
 public class Client2 {
     public static void main(String[] args) throws Exception {
         String message;
-        char FLAG = 'R';
-        char header = 'A';
-        char trailer = 'Z';
+        char FLAG = 'F';
+        char header = 'H';
+        char trailer = 'T';
         char ESC = 'E';
         String flag = "01111110";
         Socket sock = new Socket("127.0.0.1", 2000);
-        Scanner sc = new Scanner(System.in);
         PrintWriter pw = new PrintWriter(sock.getOutputStream(), true);
         BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
         List<Character> al = Arrays.asList(FLAG,header,trailer,ESC);
@@ -25,7 +24,7 @@ public class Client2 {
 
             if(message.charAt(message.length()-1)=='$') {
                 System.out.println("Client 2 : Decoded frames data is ");
-                String[] temp = message.substring(1, message.length() - 2).split("RR");
+                String[] temp = message.substring(1, message.length() - 2).split("FF");
                 for (String x : temp) {
                     String y = x.substring(1, x.length() - 1);
                     String ans = "";
@@ -46,7 +45,7 @@ public class Client2 {
             }
             else {
                 System.out.println("Client 2 : Decoded frames data is ");
-                String[] temp = message.substring(8, message.length() - 9).split("0111111001111110");
+                String[] temp = message.substring(8, message.length() - 9).split(flag+flag);
                 for (String x : temp) {
                     x = x.replaceAll("111110","11111");
                     System.out.println(x);

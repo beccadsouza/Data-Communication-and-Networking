@@ -7,7 +7,7 @@ import java.net.*;
 public class Server {
     public static void main(String[] args) throws Exception {
         String message;
-
+        System.out.println("Server is up");
         ServerSocket serverSocket1 = new ServerSocket(3000);
         Socket sock1 = serverSocket1.accept( );
         ServerSocket serverSocket2 = new ServerSocket(2000);
@@ -17,12 +17,11 @@ public class Server {
         BufferedReader br1 = new BufferedReader(new InputStreamReader(sock1.getInputStream()));
         BufferedReader br2 = new BufferedReader(new InputStreamReader(sock2.getInputStream()));
 
-        while(true) {
+        do {
             message = br1.readLine();
             pw2.println(message);
             pw2.flush();
-            if(message.equals("bye")) break;
-        }
+        } while (!message.equals("bye"));
 
         serverSocket1.close();
         serverSocket2.close();
@@ -32,5 +31,6 @@ public class Server {
         pw2.close();
         br1.close();
         br2.close();
+        System.out.println("Server shutting down.");
     }
 }
