@@ -1,4 +1,5 @@
-package DCCN;
+package DCCN.arq;
+
 import java.io.*;
 import java.net.*;
 /*
@@ -19,8 +20,23 @@ public class Server {
 
         do {
             message = br1.readLine();
-            pw2.println(message);
-            pw2.flush();
+            if(message.equals("bye")){
+            	System.out.println("Client 1 said bye");
+            	pw2.println("bye");
+            	pw2.flush();
+            	break;
+            }
+            if(Integer.parseInt(String.valueOf(message.charAt(message.length()-1)))%2==1){
+            	System.out.println("Sending data "+message+" to client 2");
+            	pw2.println(message);
+            	pw2.flush();
+            	System.out.println("Sending "+"ack" + message.charAt(message.length()-1));
+            	pw1.println("ack" + message.charAt(message.length()-1));
+            	pw1.flush();
+            }
+            else{
+            	System.out.println("Not sending data "+message+" to client 2");
+            }
         } while (!message.equals("bye"));
 
         serverSocket1.close();
