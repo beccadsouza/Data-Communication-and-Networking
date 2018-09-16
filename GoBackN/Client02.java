@@ -14,11 +14,11 @@ public class Client02 {
         PrintWriter pw = new PrintWriter(sock.getOutputStream(), true);
         BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
         while(true) {
-        	String received ;
-        	if(br.ready()){
-        		received = br.readLine();
-            	if(received.equals("bye")) break;
-            	System.out.println("Received data "+received+"\n");
+            String received ;
+            if(br.ready()){
+                received = br.readLine();
+                if(received.equals("bye")) break;
+                System.out.println("Received data "+received+"\n");
             }
         }
         sock.close();

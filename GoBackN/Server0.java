@@ -8,8 +8,8 @@ import java.net.Socket;
 import java.util.Random;
 
 /*
-* Created by Rebecca D'souza on 02.09.18
-* */
+ * Created by Rebecca D'souza on 02.09.18
+ * */
 public class Server0 {
     public static void main(String[] args) throws Exception {
         String message,prev="";
@@ -23,26 +23,44 @@ public class Server0 {
         BufferedReader br1 = new BufferedReader(new InputStreamReader(sock1.getInputStream()));
         BufferedReader br2 = new BufferedReader(new InputStreamReader(sock2.getInputStream()));
         Random random = new Random();
-        int delay;
+        boolean funny = true;
+        int curr = 1;
 
         do {
             message = br1.readLine();
             if(message.equals("bye")){
-            	System.out.println("Client 1 said bye");
-            	pw2.println("bye");
-            	pw2.flush();
-            	break;
+                System.out.println("Client 1 said bye");
+                pw2.println("bye");
+                pw2.flush();
+                break;
             }
-            System.out.println("Sending data "+message+" to client 2");
+
+            if(curr<Integer.parseInt(message.substring(8))){
+                funny = true;
+            }
+
+//            System.out.println("Sending data "+message+" to client 2");
             pw2.println(message);
             pw2.flush();
-            if(prev.equals(message)) delay = 0;
-            else delay = (random.nextInt(10)+5);
-            System.out.println("Sending "+"ack" + message.charAt(message.length()-1)+" after "+delay+" seconds\n");
-            try { Thread.sleep(delay*1000); }catch (Exception ignored){ }
-            pw1.println("ack" + message.charAt(message.length()-1));
-            pw1.flush();
-            prev = message;
+
+            if(random.nextInt(100)%4==0 && funny && curr!=1){
+                funny = false;
+                if(random.nextInt(20)%2==0){
+                    System.out.println("Sending " + "nak" +Integer.parseInt(message.substring(8)));
+                    pw1.println("nak" + Integer.parseInt(message.substring(8)));
+                    pw1.flush();
+                }
+                else{
+                    System.out.println("Not sending acks anymore");
+                }
+            }
+            if(funny) {
+                System.out.println("Sending " + "ack" + Integer.parseInt(message.substring(8)));
+                pw1.println("ack" + Integer.parseInt(message.substring(8)));
+                pw1.flush();
+            }
+
+            curr = Integer.parseInt(message.substring(8));
         } while (!message.equals("bye"));
 
 
