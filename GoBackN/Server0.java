@@ -1,11 +1,8 @@
 package DCCN.GoBackN;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.Random;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 
 /*
  * Created by Rebecca D'souza on 02.09.18
