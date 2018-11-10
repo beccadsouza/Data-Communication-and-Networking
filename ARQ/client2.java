@@ -2,7 +2,7 @@ package DCCN.ARQ;
 import java.io.*;
 import java.net.Socket;
 /*
- * Created by Rebecca D'souza on 02.09.18
+ * Created by Rebecca D'souza on 04.09.18
  * */
 public class client2 {
     public static void main(String[] args) throws Exception {

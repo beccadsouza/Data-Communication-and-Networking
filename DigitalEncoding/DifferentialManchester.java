@@ -1,4 +1,4 @@
-package DCCN;
+package DCCN.DigitalEncoding;
 import java.util.Scanner;
 /*
 * Created by Rebecca D'souza on 10/08/18
