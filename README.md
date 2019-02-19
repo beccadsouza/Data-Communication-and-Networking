@@ -1,8 +1,5 @@
-# DCCN
-Data Communication and Networking Lab
+## Data communications and networking
 
-Develop prototype of protocols residing in different layers of Reference Model.
-
-Demonstrate the functions defined by different layers of Reference Models.
-
-Use Client-Server paradigm.
+Developed prototype of protocols residing in different layers of Reference Model.
+Demonstrated the functions defined by different layers of Reference Models.
+Used Client-Server paradigm.
